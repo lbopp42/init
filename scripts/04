@@ -1,0 +1,16 @@
+#!/bin/bash
+# Basic if statement
+
+LASTCRON=`echo $CRONMD5`
+NEWCRON=`md5sum /etc/crontab | cut -d " " -f1`
+
+if [ "$LASTCRON" != "$NEWCRON" ]
+then
+	echo "On ajoute"
+	`export CRONMD5=$NEWCRON`
+	echo $NEWCRON
+	echo Hey that\'s a large number.
+	pwd
+fi
+date
+
