@@ -1,16 +1,17 @@
 #!/bin/bash
-# Basic if statement
 
-LASTCRON=`echo $CRONMD5`
 NEWCRON=`md5sum /etc/crontab | cut -d " " -f1`
 
-if [ "$LASTCRON" != "$NEWCRON" ]
+if [ -e "$HOME/.md5cron" ]
 then
-	echo "On ajoute"
-	`export CRONMD5=$NEWCRON`
-	echo $NEWCRON
-	echo Hey that\'s a large number.
-	pwd
+	read -r line < $HOME/.md5cron
+	if [ "$line" != "$NEWCRON" ]
+	then
+		echo "Bonjour,\nLe fichier /etc/crontab a ete change !" | mail -s "Changement de /etc/crontab" root
+		md5sum /etc/crontab | cut -d " " -f1 > $HOME/.md5cron
+	fi
+else
+	ls ~
+	touch $HOME/.md5cron
+	md5sum /etc/crontab | cut -d " " -f1 > $HOME/.md5cron
 fi
-date
-
