@@ -1,1 +1,2 @@
-Le fichier contenant les entrees locales DNS est le fichier "hosts" dans /etc
+Dans /etc/hosts mettre:
+46.19.122.85 intra.42.fr
