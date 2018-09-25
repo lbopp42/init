@@ -1,9 +1,11 @@
 #!/bin/bash
+#Mettre ceci dans crontab -e: 0 0 * * * 04
 
 NEWCRON=`md5sum /etc/crontab | cut -d " " -f1`
 
 if [ -e "$HOME/.md5cron" ]
 then
+	echo $NEWCRON
 	read -r line < $HOME/.md5cron
 	if [ "$line" != "$NEWCRON" ]
 	then
@@ -11,7 +13,6 @@ then
 		md5sum /etc/crontab | cut -d " " -f1 > $HOME/.md5cron
 	fi
 else
-	ls ~
 	touch $HOME/.md5cron
 	md5sum /etc/crontab | cut -d " " -f1 > $HOME/.md5cron
 fi
